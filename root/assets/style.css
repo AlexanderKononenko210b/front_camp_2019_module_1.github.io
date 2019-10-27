@@ -1,0 +1,47 @@
+body { 
+    color: #8f8f8f; 
+    font: 12px Tahoma, sans-serif; 
+    background-color: #f0f0f0;
+    padding: 0; 
+    margin: 0 auto;
+}
+
+h2 {
+    display: inline-block;
+	color: #7e7e7e;
+    font: 16px;
+    padding: 0;
+    margin: 0 auto;
+}
+
+.container {
+    width: 100%;
+    max-width: 1024px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.container:after .row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.container-border {
+    padding: 10px;
+    background: #ffffff;
+    text-align: center;
+}
+
+.row {
+    margin-bottom: 15px;
+}
+
+.update-btn {
+    width: 180px;
+    height: 45px;
+    border: 2px solid #7e7e7e;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin: 10px auto;
+}
