@@ -2,10 +2,10 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        app: ["babel-polyfill", "./root/index.js"]
+        app: ["babel-polyfill", "./root/src/index.js"]
     },
     output: {
-        path: path.resolve(__dirname, 'root'),
+        path: path.resolve(__dirname, 'root/dist'),
         filename:'main.js',
         publicPath: 'http://localhost:3000/'
     },

@@ -10,12 +10,14 @@ updateBtn.addEventListener("click", () => {
 });
 
 async function getNews(mode) {
+    console.log("start");
     const response = await load();
     if(response && response.articles && response.articles.length > 0) {
         if(mode === constants.UPDATE_MODE) {
             let container = document.querySelector(".container");
             container.innerHTML = "";
         }
+        console.log(response.articles);
         addNewsLines(response.articles);
     }
 }
