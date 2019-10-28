@@ -10,6 +10,14 @@ const countries = [
     {
         name: "Australia",
         alias: "au"
+    },
+    {
+        name: "Canada",
+        alias: "ca"
+    },
+    {
+        name: "Germany",
+        alias: "de"
     }
 ];
 
