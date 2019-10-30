@@ -1,4 +1,4 @@
-export default async function dataLoader(url) {
+export default async function fetchWrapperSvc(url) {
     const request = new Request(url);
     return await fetch(request)
         .then(async response => {
