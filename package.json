@@ -23,6 +23,7 @@
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
-    "babel-polyfill": "^6.26.0"
+    "@babel/polyfill": "^7.6.0",
+    "whatwg-fetch": "^3.0.0"
   }
 }

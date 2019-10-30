@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        app: ["babel-polyfill", "./root/src/index.js"]
+        app: ["whatwg-fetch", "@babel/polyfill", "./root/src/index.js"]
     },
     output: {
         path: path.resolve(__dirname, 'root/dist'),
@@ -18,7 +18,16 @@ module.exports = {
                     {
                         loader: 'babel-loader',
                         options: { 
-                            presets: ["@babel/preset-env"],
+                            presets: [
+                                [
+                                    "@babel/preset-env",
+                                    {
+                                        useBuiltIns: "entry",
+                                        corejs: 3,
+                                        targets: { browsers: ["last 2 versions", "ie >= 11"] }
+                                    }
+                                ]
+                            ],
                         }
                     },
                 ]
