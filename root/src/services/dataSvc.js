@@ -1,8 +1,9 @@
 import fetchWrapperSvc from './fetchWrapperSvc';
 import lazyLoaderSvc from './lazyLoaderSvc';
 import ErrorGeneratorSvc from './errorGeneratorSvc';
+import requestFactorySvc from '../factory/requestFactory';
 
-export default async function dataSvc(url) {
+export default async function dataSvc(request) {
 
     try{
         const generator = new ErrorGeneratorSvc();
@@ -14,6 +15,6 @@ export default async function dataSvc(url) {
             instance.log(error);
         });
     } finally {
-        return await fetchWrapperSvc(url);
+        return await fetchWrapperSvc(request);
     }
 }

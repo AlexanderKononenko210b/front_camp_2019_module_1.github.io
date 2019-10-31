@@ -3,6 +3,7 @@ import ViewController from './viewController';
 import dataSvc from '../services/dataSvc'
 import urlBuilderSvc from '../services/urlBuilderSvc';
 import constants from '../core/constants';
+import requestFactorySvc from '../factory/requestFactory'
 
 export default class RootController {
 
@@ -14,11 +15,12 @@ export default class RootController {
     initiate () {
         this.eventController.searchButtonEventListener(this.getNews.bind(this));
         const url = urlBuilderSvc();
-        this.getNews(url, constants.START_MODE);
+        const request = requestFactorySvc(url, "GET");
+        this.getNews(request, constants.START_MODE);
     }
 
-    async getNews (url, mode) {
-        const response = await dataSvc(url);
+    async getNews (request, mode) {
+        const response = await dataSvc(request);
         if(response && response.articles && response.articles.length > 0) {
             if(mode === constants.UPDATE_MODE) {
                 let container = document.querySelector(".container");
