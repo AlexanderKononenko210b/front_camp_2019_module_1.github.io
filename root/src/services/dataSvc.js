@@ -8,8 +8,11 @@ export default async function dataSvc(url) {
         const generator = new ErrorGeneratorSvc();
         throw new Error(generator.generate().message);
     } catch(error) {
-        lazyLoaderSvc.lazyModules.errorHandler().then( errorHandler => 
-            errorHandler.errorHandlerSvc(error));
+        lazyLoaderSvc.lazyModules.errorHandler().then( errorHandler => {
+            const instance = new errorHandler.ErrorHandlerSvc(error);
+            instance.show(error);
+            instance.log(error);
+        });
     } finally {
         return await fetchWrapperSvc(url);
     }
