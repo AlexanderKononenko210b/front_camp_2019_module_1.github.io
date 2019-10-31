@@ -28,6 +28,20 @@ const enums = {
             name: "Germany",
             alias: "de"
         }
+    ],
+    errors: [
+        {
+            name: "badBinaryDomainRequest",
+            message: "Test error: The binary domain request is invalid."
+        },
+        {
+            name: "invalid",
+            message: "Test error: The request failed because it contained an invalid value. The value could be a parameter value, a header value, or a property value."
+        },
+        {
+            name: "invalidHeader",
+            message: "Test error: The request failed because it contained an invalid header."
+        }
     ]
 };
 
