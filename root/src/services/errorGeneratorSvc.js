@@ -1,6 +1,6 @@
 import enums from '../core//enums';
 
-export default class ErrorGeneratorSvc {
+export default class ErrorGenerator {
     constructor() {
         this.errorIndex = this.getRandomInt(0, 3);
     }

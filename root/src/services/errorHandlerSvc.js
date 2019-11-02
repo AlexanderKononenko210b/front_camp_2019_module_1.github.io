@@ -1,13 +1,13 @@
-export class ErrorHandlerSvc {
+export class ErrorHandler {
 
     constructor() {
-        if( typeof ErrorHandlerSvc.instance === "object") {
-            return ErrorHandlerSvc.instance;
+        if( typeof ErrorHandler.instance === "object") {
+            return ErrorHandler.instance;
         }
 
-        ErrorHandlerSvc.instance = this;
+        ErrorHandler.instance = this;
 
-        return ErrorHandlerSvc.instance;
+        return ErrorHandler.instance;
     }
 
     show(error) {
@@ -15,6 +15,6 @@ export class ErrorHandlerSvc {
     }
 
     log(error) {
-        console.log(`Error info: message:${error.message}`);
+        console.log(`Test error info: message:${error.message}`);
     }
 }

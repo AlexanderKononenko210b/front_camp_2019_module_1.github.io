@@ -1,5 +1,6 @@
 import constants from '../core/constants';
-import urlBuilderSvc from '../services/urlBuilderSvc';
+import urlBuilder from '../services/urlBuilderSvc';
+import { requestProxy } from '../services/requestProxySvc';
 
 export default class EventController {
 
@@ -13,8 +14,9 @@ export default class EventController {
     searchButtonEventListener(callback) {
         let searchBtn = document.getElementById("search-btn");
             searchBtn.addEventListener("click", () => {
-            const url = urlBuilderSvc(this.countryValue, this.categoryValue);
-            callback(url, constants.UPDATE_MODE);
+            const url = urlBuilder(this.countryValue, this.categoryValue);
+            const request = requestProxy(url, "GET");
+            callback(request, constants.UPDATE_MODE);
         });
     }
 

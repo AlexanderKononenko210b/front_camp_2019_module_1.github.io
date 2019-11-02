@@ -1,6 +1,6 @@
 import constants from '../core/constants';
 
-export default function urlBuilderSvc(country, category) {
+export default function urlBuilder(country, category) {
     let url = constants.URL;
 
     url = country ? `${url}country=${country}` : `${url}country=us`;

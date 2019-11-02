@@ -1,9 +1,9 @@
 import EventController from './eventController';
 import ViewController from './viewController';
-import dataSvc from '../services/dataSvc'
-import urlBuilderSvc from '../services/urlBuilderSvc';
+import newsLoader from '../services/newsLoaderSvc.js';
+import urlBuilder from '../services/urlBuilderSvc';
 import constants from '../core/constants';
-import requestFactorySvc from '../factory/requestFactory'
+import { requestProxy } from '../services/requestProxySvc';
 
 export default class RootController {
 
@@ -14,13 +14,13 @@ export default class RootController {
 
     initiate () {
         this.eventController.searchButtonEventListener(this.getNews.bind(this));
-        const url = urlBuilderSvc();
-        const request = requestFactorySvc(url, "GET");
+        const url = urlBuilder();
+        const request = requestProxy(url, "GET");
         this.getNews(request, constants.START_MODE);
     }
 
     async getNews (request, mode) {
-        const response = await dataSvc(request);
+        const response = await newsLoader(request);
         if(response && response.articles && response.articles.length > 0) {
             if(mode === constants.UPDATE_MODE) {
                 let container = document.querySelector(".container");
