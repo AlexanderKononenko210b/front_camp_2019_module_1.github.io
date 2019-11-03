@@ -1,4 +1,4 @@
-import createRequest from '../factory/requestFactorySvc';
+import createRequest from './factory/requestFactorySvc';
 
 let handler = {
     apply: function(target, thisArg, argList) {

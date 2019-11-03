@@ -1,23 +1,19 @@
-import constants from '../core/constants';
-import urlBuilder from '../services/urlBuilderSvc';
-import { requestProxy } from '../services/requestProxySvc';
-
-export default class EventController {
+import Controller from './Controller';
+export default class EventController extends Controller {
 
     constructor () {
-        this.countryValue = "";
-        this.categoryValue = "";
+        super();
         this.countriesSelectEventListener();
         this.categoriesSelectEventListener();
     }
 
-    searchButtonEventListener(callback) {
-        let searchBtn = document.getElementById("search-btn");
+    searchButtonEventListener(action) {
+        if(action) {
+            let searchBtn = document.getElementById("search-btn");
             searchBtn.addEventListener("click", () => {
-            const url = urlBuilder(this.countryValue, this.categoryValue);
-            const request = requestProxy(url, "GET");
-            callback(request, constants.UPDATE_MODE);
+            action({ country: this.countryValue, category: this.categoryValue });
         });
+        }
     }
 
     countriesSelectEventListener() {

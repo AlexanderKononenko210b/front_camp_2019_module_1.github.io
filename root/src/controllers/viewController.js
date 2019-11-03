@@ -1,44 +1,30 @@
+import ViewCategorySelect from '../views/viewCategorySelect';
+import ViewCountrySelect from '../views/viewCountrySelect';
+import ViewNewsRecord from '../views/viewNewsRecord';
+import Controller from './Controller';
 import enums from '../core/enums';
+import constants from '../core/constants';
 
-export default class ViewController {
+export default class ViewController extends Controller {
 
     constructor() {
-        this.buildCountries();
-        this.buildCategories();
+        super();
+        this.categorySelect = new ViewCategorySelect();
+        this.countrySelect = new ViewCountrySelect();
+        this.viewNewsRecord = new ViewNewsRecord();
     }
 
-    buildCountries() {
-        let countriesDropdown = document.getElementById("countries");
-        const defaultIndex = 0;
-        if(countriesDropdown && enums.countries.length > 0) {
-            for(let i = 0; i < enums.countries.length; ++i) {
-                let option = document.createElement("option");
-                option.textContent = enums.countries[i].name;
-                option.value = enums.countries[i].alias;
-                if(defaultIndex === 0) {
-                    option.selected = true;
-                    this.countryValue = enums.countries[i].alias;
-                }
-                countriesDropdown.appendChild(option);
-            }
-        }
+    initiate() {
+        this.categorySelect.render(enums.categories);
+        this.countrySelect.render(enums.countries);
     }
 
-    buildCategories() {
-        let categoriesDropdown = document.getElementById("categories");
-        const defaultIndex = 0;
-        if(categoriesDropdown && enums.categories.length > 0) {
-            for(let i = 0; i < enums.categories.length; ++i) {
-                let option = document.createElement("option");
-                option.textContent = enums.categories[i];
-                option.value = enums.categories[i];
-                if(defaultIndex === 0) {
-                    option.selected = true;
-                    this.categoryValue = enums.categories[i];
-                }
-                categoriesDropdown.appendChild(option);
-            }
-        }
+    newsInit(news) {
+        this.viewNewsRecord.render(news, constants.START_MODE);
+    }
+
+    newsUpdate(news) {
+        this.viewNewsRecord.render(news, constants.UPDATE_MODE);
     }
 }
 
