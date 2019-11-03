@@ -1,20 +1,16 @@
-export class ErrorHandler {
+import ErrorHandlerPopUp from './errorHandlerPopUpSvc';
+export default class ErrorHandler {
 
-    constructor() {
-        if( typeof ErrorHandler.instance === "object") {
-            return ErrorHandler.instance;
-        }
-
-        ErrorHandler.instance = this;
-
-        return ErrorHandler.instance;
+    constructor(error) {
+        this.error = error;
+        this.popup = new ErrorHandlerPopUp();
     }
 
-    show(error) {
-        window.alert(error.message);
+    show() {
+        this.popup.show(this.error);
     }
 
-    log(error) {
-        console.log(`Test error info: message:${error.message}`);
+    log() {
+        console.log(`Test error info: message:${this.error.message}`);
     }
 }
