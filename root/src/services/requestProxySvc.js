@@ -1,4 +1,5 @@
 import createRequest from './factory/requestFactorySvc';
+import ProxyPolyfill from 'proxy-polyfill/src/proxy';
 
 let handler = {
     apply: function(target, thisArg, argList) {
@@ -9,4 +10,6 @@ let handler = {
     }
 };
 
-export let requestProxy  = new Proxy(createRequest, handler);
+const NewProxy = new ProxyPolyfill();
+
+export let requestProxy  = new NewProxy(createRequest, handler);

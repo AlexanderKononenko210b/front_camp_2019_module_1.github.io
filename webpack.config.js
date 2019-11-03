@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        app: ["whatwg-fetch", "@babel/polyfill", "./root/src/index.js"]
+        app: ["whatwg-fetch", "@babel/polyfill", "proxy-polyfill", "./root/src/index.js"]
     },
     output: {
         path: path.resolve(__dirname, 'root/dist'),

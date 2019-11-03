@@ -11,7 +11,7 @@ export class ErrorHandler {
     }
 
     show(error) {
-        alert(error.message);
+        window.alert(error.message);
     }
 
     log(error) {
