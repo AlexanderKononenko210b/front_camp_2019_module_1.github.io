@@ -7,7 +7,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'root/dist'),
         filename:'main.js',
-        publicPath: 'http://localhost:8080/'
+        publicPath: 'https://github.com/AlexanderKononenko210b/front_camp_2019_module_1.github.io'
     },
     module: {
         rules: [

@@ -1,7 +1,7 @@
 import createRequest from './factory/requestFactorySvc';
 import ProxyPolyfill from 'proxy-polyfill/src/proxy';
 
-let handler = {
+const handler = {
     apply: function(target, thisArg, argList) {
         if(argList.includes("GET")) {
             console.log(Object.getOwnPropertyDescriptors({...argList}));
@@ -12,4 +12,4 @@ let handler = {
 
 const NewProxy = new ProxyPolyfill();
 
-export let requestProxy  = new NewProxy(createRequest, handler);
+export const requestProxy  = new NewProxy(createRequest, handler);
