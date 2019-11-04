@@ -1,13 +1,14 @@
 import EventController from './eventController';
 import ViewController from './viewController';
 import urlBuilder from '../services/urlBuilderSvc';
-import newsLoader from '../services/newsLoaderSvc';
+import fetchWrapper from '../shared/services/fetchWrapperSvc';
+import { helper } from '../shared/helpers/helperSvc';
 import { requestProxy } from '../services/requestProxySvc';
-//import createRequest from '../services/factory/requestFactorySvc';
-import constants from '../core/constants';
+import constants from '../config/app.constants';
+import enums from '../config/app.enums';
+import config from '../config/app.config';
 
 export default class RootController {
-
     constructor () {
         this.eventController = new EventController();
         this.viewController = new ViewController();
@@ -20,18 +21,29 @@ export default class RootController {
     }
 
     async getNews(option) {
-        const url = option ? urlBuilder(option.country, option.category) : urlBuilder();
-        const request = requestProxy(url, "GET");
-        //const request = createRequest(url, "GET");
-        const response = await newsLoader(request);
-        let articles = response.articles.length > constants.NUMBER_ROWS_TO_SHOW
-            ? response.articles.slice(constants.NUMBER_ROWS_TO_SHOW)
-            : response.articles;
+        try {
+            const url = option ? urlBuilder(option.country, option.category) : urlBuilder();
+            const request = requestProxy(url, "GET");
+            const response = await fetchWrapper(request);
+            const articles = helper.sliceArticles(response.articles, config.NUMBER_ROWS_TO_SHOW);
 
-        if(option) {
-            this.viewController.newsUpdate(articles);
-        } else {
-            this.viewController.newsInit(articles);
+            if(option) {
+                this.viewController.newsUpdate(articles);
+            } else {
+                this.viewController.newsInit(articles);
+            }
+
+            if(articles.filter((item) => {
+                return helper.isValidLength(item.content, config.LIMIT_ARTICLE_LENGTH) === false;           
+            }).length > 0) {
+                throw new Error(enums.errors[0].message);
+            }
+        } catch(error) {
+            const module = await import('../shared/services/errorHandlerSvc.js');
+            const errorHandler = module.default;
+            const handler = new errorHandler();
+            handler.show(error);
+            handler.log(error);
         }
     }
 }

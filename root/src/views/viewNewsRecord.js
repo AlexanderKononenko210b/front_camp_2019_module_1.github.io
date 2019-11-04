@@ -1,5 +1,5 @@
 import { ViewRoot } from './viewRoot';
-import constants from '../core/constants';
+import constants from '../config/app.constants';
 
 export default class ViewNewsRecord extends ViewRoot {
     constructor() {

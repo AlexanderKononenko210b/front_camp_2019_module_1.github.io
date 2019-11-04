@@ -1,8 +1,8 @@
-import Controller from './Controller';
-export default class EventController extends Controller {
+export default class EventController {
 
     constructor () {
-        super();
+        this.categoryValue = "";
+        this.countryValue = "";
         this.countriesSelectEventListener();
         this.categoriesSelectEventListener();
     }

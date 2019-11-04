@@ -31,17 +31,9 @@ const enums = {
     ],
     errors: [
         {
-            name: "badBinaryDomainRequest",
-            message: "The binary domain request is invalid."
+            name: "tooLongContent",
+            message: "The content is too long."
         },
-        {
-            name: "invalid",
-            message: "The request failed because it contained an invalid value. The value could be a parameter value, a header value, or a property value."
-        },
-        {
-            name: "invalidHeader",
-            message: "The request failed because it contained an invalid header."
-        }
     ]
 };
 
