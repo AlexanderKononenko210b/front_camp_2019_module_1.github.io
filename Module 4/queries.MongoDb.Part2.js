@@ -82,7 +82,7 @@ db.airlines.aggregate([
         $group: {
             _id: "$carrier",
             total: {
-                $sum: 1
+                $max: "$passengers"
             }
         }
     },
