@@ -221,13 +221,9 @@ db.enron.aggregate([
     {
         $match: {
             sender: "phillip.love@enron.com",
-            recipient: "sladanaanna.kulic@enron.com"
+            recipient: "sladana-anna.kulic@enron.com"
         }
     }
 ])
-
-db.enron.find({
-    "headers.To": "sladanaanna.kulic@enron.com"
-})
 
 
