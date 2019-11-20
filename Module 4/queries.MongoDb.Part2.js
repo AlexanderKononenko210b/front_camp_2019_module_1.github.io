@@ -1,3 +1,4 @@
+// 1.1 task
 db.airlines.aggregate([
     {
         $group: {
@@ -14,6 +15,7 @@ db.airlines.aggregate([
     }
 ]);
 
+// 1.2 task
 db.airlines.aggregate([
     {
         $match: {
@@ -25,7 +27,8 @@ db.airlines.aggregate([
     {
         $group: {
             _id: {
-                destCity: "$destCity"
+                country: "$destCountry",
+                city: "$destCity"
             },
             avgPassengers: { 
                 $avg: "$passengers" 
@@ -43,12 +46,13 @@ db.airlines.aggregate([
     {
         $project: {
             _id: 0,
-            avgPassengers: 1,
-            city: "$_id"
+            city: "$_id.city",
+            avgPassengers: 1
         }
     }
 ])
 
+// 1.3 task
 db.airlines.aggregate([
     {
         $match: {
@@ -65,6 +69,7 @@ db.airlines.aggregate([
     }
 ])
 
+// 1.4 task
 db.airlines.aggregate([
     {
         $match: {
@@ -82,7 +87,7 @@ db.airlines.aggregate([
         $group: {
             _id: "$carrier",
             total: {
-                $max: "$passengers"
+                $sum: "$passengers"
             }
         }
     },
@@ -92,13 +97,14 @@ db.airlines.aggregate([
         }
     },
     {
-        $limit: 10
+        $skip: 3
     },
     {
-        $skip: 3
+        $limit: 7
     }
 ])
 
+// 1.5 task
 db.airlines.aggregate([
     {
         $match: {
@@ -108,8 +114,8 @@ db.airlines.aggregate([
     {
         $group: {
             _id: {
-                originCity: "$originCity",
-                originState: "$originState"
+                city: "$originCity",
+                state: "$originState"
             },
             totalPassengers: { $sum: "$passengers"}
         }
@@ -121,20 +127,18 @@ db.airlines.aggregate([
     },
     {
         $group: {
-            _id: {
-                originState: "$_id.originState"
-            },
+            _id: "$_id.state",
             totalPassengers: { 
                 $max: "$totalPassengers"
             },
-            originCity: {
-                $first: "$_id.originCity"
+            city: {
+                $first: "$_id.city"
             }
         }
     },
     {
         $sort: {
-            "_id.originState": 1
+            "_id": 1
         }
     },
     {
@@ -145,85 +149,96 @@ db.airlines.aggregate([
             _id: 0,
             totalPassengers: "$totalPassengers",
             location: {
-                state: "$_id.originState",
-                city: "$originCity"
+                state: "$_id",
+                city: "$city"
             }
         }
     }
 ])
 
+// 2.1 task
 db.enron.aggregate([
     {
         $unwind: "$headers.To"
     },
     {
-        $project: {
-            "headers.From": 1,
-            "headers.To": 1,
-            _id: 0
+        $group: {
+            _id: "$_id",
+            from: { 
+                $first: "$headers.From"
+            },
+            to: {
+                $addToSet: "$headers.To"
+            }
         }
+    },
+    {
+        $unwind: "$to"
     },
     {
         $group: {
             _id: {
-                sender: "$headers.From",
-                recipient: "$headers.To",
+                from: "$from",
+                to: "$to"
             },
-            countEmail: { $sum: 1 }
+            total: {
+                $sum: 1
+            }
         }
     },
     {
         $sort: {
-            countEmail: -1
+            total: -1
         }
     },
     {
         $limit: 1
-    },
-    {
-        $project: {
-            _id: 0,
-            sender: "$_id.sender",
-            recipient: "$_id.recipient",
-            countEmail: "$countEmail"
-        }
     }
 ])
 
+// check
 db.enron.aggregate([
     {
         $unwind: "$headers.To"
     },
     {
-        $project: {
-            "headers.From": 1,
-            "headers.To": 1,
-            _id: 0
+        $group: {
+            _id: "$_id",
+            from: { 
+                $first: "$headers.From"
+            },
+            to: {
+                $addToSet: "$headers.To"
+            }
         }
+    },
+    {
+        $unwind: "$to"
     },
     {
         $group: {
             _id: {
-                sender: "$headers.From",
-                recipient: "$headers.To",
+                from: "$from",
+                to: "$to"
             },
-            countEmail: { $sum: 1 }
+            total: {
+                $sum: 1
+            }
         }
     },
     {
         $project: {
             _id: 0,
-            sender: "$_id.sender",
-            recipient: "$_id.recipient",
-            countEmail: "$countEmail"
+            from: "$_id.from",
+            to: "$_id.to",
+            total: "$total"
         }
     },
     {
         $match: {
-            sender: "phillip.love@enron.com",
-            recipient: "sladana-anna.kulic@enron.com"
+            from: "phillip.love@enron.com",
+            to: "sladana-anna.kulic@enron.com"
         }
     }
 ])
-
 
